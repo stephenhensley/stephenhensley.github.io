@@ -6,6 +6,6 @@ I'll update this soon with some content, but for now I just need a place to redi
 
 ## Test Programs
 
-- [Modified Sliders example](instr_tester/test.html)
-- [Instr File Parsing Test](instr_tester/instr_parser_test.html)
-- [Testing UI etc](instr_tester/ui_test.html)
+- [Modified Sliders example](test.html)
+- [Instr File Parsing Test](instr_parser_test.html)
+- [Testing UI etc](ui_test.html)
