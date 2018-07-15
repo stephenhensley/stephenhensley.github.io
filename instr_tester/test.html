@@ -126,9 +126,9 @@ CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
   <input type="range" name="frequency" id="cf" step="1" value="880"
   min="880" max="3000"> filter frequency</p>
   <input type="range" name="frequency" id="freq2" step="1" value="100"
-  min="0" max="1000"> filter frequency</p>
+  min="0" max="1000"> fundamental 2</p>
   <input type="range" name="frequency" id="cf2" step="1" value="880"
-  min="880" max="3000"> filter frequency</p>
+  min="880" max="3000"> filter freq 2</p>
   <textarea class="console" cols="55" rows="16" id="console"
 value="">loading...</textarea>
 <p>
@@ -143,16 +143,17 @@ nchnls = 2
 schedule 1,0,-1
 instr 1
  kfr chnget "freq"
- kamp chnget "amp"
- kcf chnget "cf"
  kfr2 chnget "freq2"
+ kcf chnget "cf"
  kcf2 chnget "cf2"
+ kamp chnget "amp"
  a1 vco2 kamp,kfr
  b1 vco2 kamp,kfr2
  a2 moogvcf a1, kcf, 0.8
  b2 moogvcf b1, kcf2, 0.8
+ c = 0.7 * (a2 + b2)
 
-   outs 0.7*(b2+a2),0.7*(b2+a2)
+   outs c, c
 endin
 </textarea>
 
