@@ -64,7 +64,7 @@
         var lines = txt.split(/\r\n|\n\\/);
         var isConfig = false;
         console.log("beginning to parse");
-        lines.foreach((line) => {
+        lines.forEach((line) => {
             //console.log(line);
             if (line.localeCompare("nebconfigbegin") == 0) {
                 isConfig = true;
