@@ -68,7 +68,8 @@
         lines.forEach(checkLine);
         console.log("finished parsing.")
     } 
-    function checkLine(line) {
+    function checkLine(line, idx, arr) {
+        console.log(idx);
         if (line.includes("nebconfigbegin")) {
             console.log("Begin Config");
             isConfig = true;
