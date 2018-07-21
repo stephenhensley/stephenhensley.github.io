@@ -63,15 +63,15 @@
         var lines = files.split(/\r\n|\n\\/);
         var isConfig = false;
         lines.foreach((line) => {
-            console.log(line);
-            /*
+            //console.log(line);
             if (line.localeCompare("nebconfigbegin") == 0) {
                 isConfig = true;
             } else if (line.localeCompare("nebconfigend") == 0) {
                 isconfig = false;
             }
-            */
-
+            if (isConfig) {
+                console.log(line);
+            }
         });
 
 
