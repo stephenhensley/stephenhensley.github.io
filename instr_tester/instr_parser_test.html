@@ -63,16 +63,11 @@
     function parseContents(txt) {
         var lines = txt.split(/\r\n|\n\\/);
         var isConfig = false;
-        console.log("entire instr file begin");
-        lines.forEach((line) => {
-            console.log(line);
-        });
-        console.log("entire instr file end");
         console.log("beginning to parse");
         lines.forEach((line) => {
-            if (line == "nebconfigbegin\n") {
+            if (line.includes("nebconfigbegin")) {
                 isConfig = true;
-            } else if (line == "nebconfigend\n") {
+            } else if (line.includes("nebconfigend")) {
                 isconfig = false;
             }
             if (isConfig) {
