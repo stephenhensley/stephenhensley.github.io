@@ -64,24 +64,23 @@
         var lines = txt.split(/\r\n|\n\\/);
         var isConfig = false;
         console.log("beginning to parse");
-        lines.forEach((line) => {
-            if (line.includes("nebconfigbegin")) {
-                console.log("Begin Config");
-                isConfig = true;
-            }
-            if (line.includes("nebconfigend")) {
-                console.log("End Config");
-                isConfig = false;
-            }
-            console.log(isConfig);
-            if (isConfig == true) {
-                console.log(line);
-            }
-        });
+        lines.forEach(checkLine);
         console.log("finished parsing.")
-
-
     } 
+    function checkLine(line) {
+        if (line.includes("nebconfigbegin")) {
+            console.log("Begin Config");
+            isConfig = true;
+        }
+        if (line.includes("nebconfigend")) {
+            console.log("End Config");
+            isConfig = false;
+        }
+        console.log(isConfig);
+        if (isConfig == true) {
+            console.log(line);
+        }
+    }
 </script>
 </head>
 <body onload="checkFileAPI();">
