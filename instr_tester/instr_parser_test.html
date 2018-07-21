@@ -62,8 +62,9 @@
     function parseContents(txt) {
         var lines = files.split(/\r\n|\n\\/);
         var isConfig = false;
-        lines.foreach((line) =>
+        lines.foreach((line) => {
             //console.log(line);
+
             if (line.localeCompare("nebconfigbegin")) {
                 isConfig = true;
             } else if (line.localeCompare("nebconfigend")) {
