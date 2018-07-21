@@ -26,7 +26,7 @@
         if(filePath.files && filePath.files[0]) {           
             reader.onload = function (e) {
                 output = e.target.result;
-                displayContents(output);
+                //displayContents(output);
             };//end onload()
             reader.readAsText(filePath.files[0]);
         }//end if html5 filelist support
@@ -57,7 +57,26 @@
     function displayContents(txt) {
         var el = document.getElementById('main'); 
         el.innerHTML = txt; //display output in DOM
-    }   
+    }  
+
+    function parseContents(txt) {
+        var lines = files.split(/\r\n|\n\\/);
+        var isConfig = false;
+        lines.foreach((line) == >
+            //console.log(line);
+            if (line.localeCompare("nebconfigbegin")) {
+                isConfig = true;
+            } else if (line.localeCompare("nebconfigend")) {
+                isconfig = false;
+            }
+            if (isConfig) {
+                console.log(line);
+            }
+            displayContents(line);
+        });
+
+
+    } 
 </script>
 </head>
 <body onload="checkFileAPI();">
