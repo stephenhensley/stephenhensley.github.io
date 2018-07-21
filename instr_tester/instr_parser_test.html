@@ -65,9 +65,9 @@
         lines.foreach((line) => {
             //console.log(line);
 
-            if (line.localeCompare("nebconfigbegin")) {
+            if (line.localeCompare("nebconfigbegin") == 0) {
                 isConfig = true;
-            } else if (line.localeCompare("nebconfigend")) {
+            } else if (line.localeCompare("nebconfigend") == 0) {
                 isconfig = false;
             }
             if (isConfig) {
