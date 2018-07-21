@@ -62,19 +62,13 @@
     }  
 
     function parseContents(txt) {
-        //var lines = txt.split(/\r\n|\n\\/);
         var lines = txt.split(/[\r\n]+/g);
         isConfig = false;
         console.log("beginning to parse");
-        //lines.forEach(checkLine);
+        lines.forEach(checkLine);
         console.log("length " + lines.length);
-        for (var i = 0; i < lines.length; i++) {
-            console.log(i);
-            console.log(lines[i]);
-        }
-        console.log("finished parsing.");
     } 
-    /*
+    
     function checkLine(line, idx, arr) {
         console.log(idx);
         if (line.includes("nebconfigbegin")) {
@@ -90,7 +84,7 @@
             console.log(line);
         }
     }
-    */
+    
 </script>
 </head>
 <body onload="checkFileAPI();">
