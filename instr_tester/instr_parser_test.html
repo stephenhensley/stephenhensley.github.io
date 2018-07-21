@@ -70,9 +70,9 @@
         console.log("entire instr file end");
         console.log("beginning to parse");
         lines.forEach((line) => {
-            if (line == "nebconfigbegin") {
+            if (line == "nebconfigbegin\n") {
                 isConfig = true;
-            } else if (line == "nebconfigend") {
+            } else if (line == "nebconfigend\n") {
                 isconfig = false;
             }
             if (isConfig) {
