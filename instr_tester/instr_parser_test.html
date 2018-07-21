@@ -66,13 +66,17 @@
         console.log("beginning to parse");
         lines.forEach((line) => {
             if (line.includes("nebconfigbegin")) {
+                console.log("Begin Config");
                 isConfig = true;
             } else if (line.includes("nebconfigend")) {
+                console.log("nebconfigend");
                 isConfig = false;
             }
+            /*
             if (isConfig) {
                 console.log(line);
             }
+            */
         });
         console.log("finished parsing.")
 
