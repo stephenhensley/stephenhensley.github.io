@@ -4,6 +4,7 @@
     <title>Read File (via User Input selection)</title>
     <script type="text/javascript">
     var reader; //GLOBAL File Reader object for demo purpose only
+    var isConfig; // GLOBAL bool for test purpose only.
 
     /**
      * Check for the various File API support.
@@ -62,7 +63,7 @@
 
     function parseContents(txt) {
         var lines = txt.split(/\r\n|\n\\/);
-        var isConfig = false;
+        isConfig = false;
         console.log("beginning to parse");
         lines.forEach(checkLine);
         console.log("finished parsing.")
