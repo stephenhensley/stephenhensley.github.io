@@ -9,4 +9,3 @@ I'll update this soon with some content, but for now I just need a place to redi
 - [Modified Sliders example](test.html)
 - [Instr File Parsing Test](instr_parser_test.html)
 - [Testing UI etc](ui_test.html)
-- [File Reader Test](filereader.html)
