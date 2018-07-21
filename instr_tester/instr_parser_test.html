@@ -62,7 +62,8 @@
     }  
 
     function parseContents(txt) {
-        var lines = txt.split(/\r\n|\n\\/);
+        //var lines = txt.split(/\r\n|\n\\/);
+        var lines = txt.split(/[\r\n]+/g);
         isConfig = false;
         console.log("beginning to parse");
         //lines.forEach(checkLine);
