@@ -26,6 +26,7 @@
         if(filePath.files && filePath.files[0]) {           
             reader.onload = function (e) {
                 output = e.target.result;
+                parseContents(output);
                 //displayContents(output);
             };//end onload()
             reader.readAsText(filePath.files[0]);
