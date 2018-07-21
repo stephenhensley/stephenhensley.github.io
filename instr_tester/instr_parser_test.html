@@ -62,6 +62,7 @@
     function parseContents(txt) {
         var lines = files.split(/\r\n|\n\\/);
         var isConfig = false;
+        console.log("beginning to parse");
         lines.foreach((line) => {
             //console.log(line);
             if (line.localeCompare("nebconfigbegin") == 0) {
@@ -73,6 +74,7 @@
                 console.log(line);
             }
         });
+        console.log("finished parsing.")
 
 
     } 
