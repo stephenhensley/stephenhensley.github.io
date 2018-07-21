@@ -68,8 +68,9 @@
             if (line.includes("nebconfigbegin")) {
                 console.log("Begin Config");
                 isConfig = true;
-            } else if (line.includes("nebconfigend")) {
-                console.log("nebconfigend");
+            }
+            if (line.includes("nebconfigend")) {
+                console.log("End Config");
                 isConfig = false;
             }
             /*
