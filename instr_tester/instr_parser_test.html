@@ -66,14 +66,13 @@
         console.log("entire instr file begin");
         lines.forEach((line) => {
             console.log(line);
-            
         });
         console.log("entire instr file end");
         console.log("beginning to parse");
         lines.forEach((line) => {
-            if (line.localeCompare("nebconfigbegin") == 0) {
+            if (line == "nebconfigbegin" {
                 isConfig = true;
-            } else if (line.localeCompare("nebconfigend") == 0) {
+            } else if (line == "nebconfigend") {
                 isconfig = false;
             }
             if (isConfig) {
