@@ -24,9 +24,11 @@
     function readText(filePath) {
         var fileTypes = ["instr", "wav"];
         var output = ""; //placeholder for text output
+        var audioFileSources = {};
         if(filePath.files && filePath.files[0]) {           
             reader.onload = function (e) {
                 output = e.target.result;
+                // FIX: This only checks the first extension...
                 var extension = filePath.files[0].name.split('.').pop().toLowerCase(),
                     isSuccess = fileTypes.indexOf(extension) > -1;
                 console.log("extension: " + extension);
@@ -36,14 +38,14 @@
                         displayContents("Read File: " + filePath.files[0].name);
                     } else if (extension == "wav") {
                         // TODO: Don't use filereader, use URL to create ObjectURL. (basically a pointer to the original filepath)
-                        loadAudio(output);
+                        audioFileSources = loadAudio(filePath.files);
                         var prompt = "Found Audio:\n";
-                        for (var f = 0; f < filePath.files.length; f++) {
-                            prompt += "file " + f + ": " + filePath.files[f] + "\n";
+                        for (key in audioFileSources) {
+                            prompt += audioFileSources[key].name + "\n";
                         }
                         displayContents(prompt);
                     }
-                } else if (extension == ".txt") {
+                } else if (extension == "txt") {
                     displayContents(output);
                 }
             };//end onload()
@@ -79,8 +81,13 @@
         el.innerHTML = txt; //display output in DOM
     }  
 
-    function loadAudio(wav) {
-        console.log("Loading Audio. . .  (But not really yet)");
+    function loadAudio(filelist) {
+        console.log("Loading Audio. . .");
+        var srcs = [];
+        for (var i = 0; i < filelist.length; i++) {
+            srcs[filelist[i].name] = URL.createObjectURL(filelist[i]);
+        }
+        return srcs;
     }
 
 
