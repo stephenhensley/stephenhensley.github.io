@@ -104,9 +104,12 @@
                 for (var i = 1; i < configArray.length; i++) {
                     vals.push(configArray[i]);
                 }
+                configDict[key] = vals;
             }
         } else {
-            orcBody = orcBody.concat(line);
+            if (!line.includes("nebconfigend")) {
+                orcBody = orcBody.concat(line);
+            }
         }
     }
     
