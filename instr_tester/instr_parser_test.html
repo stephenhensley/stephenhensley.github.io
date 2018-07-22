@@ -18,55 +18,6 @@
         }
     }
 
-    /**
-     * read text input
-     */
-    function readText(filePath) {
-        var fileTypes = ["instr", "wav"];
-        var output = ""; //placeholder for text output
-        var audioFileSources = {};
-        if(filePath.files && filePath.files[0]) {           
-            reader.onload = function (e) {
-                output = e.target.result;
-                // FIX: This only checks the first extension...
-                var extension = filePath.files[0].name.split('.').pop().toLowerCase(),
-                    isSuccess = fileTypes.indexOf(extension) > -1;
-                console.log("extension: " + extension);
-                if (isSuccess) {
-                    if (extension == "instr") {
-                        parseContents(output);
-                        displayContents("Read File: " + filePath.files[0].name);
-                    } else if (extension == "wav") {
-                        // TODO: Don't use filereader, use URL to create ObjectURL. (basically a pointer to the original filepath)
-                        audioFileSources = loadAudio(filePath.files);
-                        var prompt = "Found Audio:\n";
-                        for (key in audioFileSources) {
-                            prompt += "file: " + key + "\n";
-                            prompt += "url: " + audioFileSources[key] + "\n";
-                        }
-                        var sound = document.getElementById("sound");
-                        for (var key in audioFileSources) {
-                            sound.src = audioFileSources[key];
-                            sound.onend = function(e) {
-                                URL.revokeObjectURL(audioFileSources[0]);
-                            }
-                        }
-                        displayContents(prompt);
-                        
-                    }
-                } else if (extension == "txt") {
-                    displayContents(output);
-                }
-            };//end onload()
-            console.log("Read File: " + filePath.files[0].name);
-            reader.readAsText(filePath.files[0]);
-        }//end if html5 filelist support
-        else { //this is where you could fallback to Java Applet, Flash or similar
-            return false;
-        }       
-        return true;
-    }   
-
     function readInstr(filePath) {
         var fileTypes = ["instr"];
         var output = ""; //placeholder for text output
@@ -92,7 +43,6 @@
 
     function readAudio(filePath) {
         var fileTypes = ["wav", "aif", "aiff"];
-        var output = ""; //placeholder for text output
         var audioFileSources = {};
         if(filePath.files && filePath.files[0]) {           
             reader.onload = function (e) {
@@ -258,6 +208,33 @@
         <audio id="sound" controls></audio>
         <br/>
         <hr/>   
+        <h2>Controls</h2>
+        <p>
+        <input type="range" name="size" id="size" step="0.0002" value="0.5"
+            min="0.0" max="1.0"> size </p>
+        <p>
+        <input type="range" name="start" id="start" step="0.0002" value="0.5"
+            min="0.0" max="1.0"> start </p>
+        <p> 
+        <input type="range" name="density" id="density" step="0.0002" value="0.5"
+            min="0.0" max="1.0"> density </p>
+        <p>
+        <input type="range" name="overlap" id="overlap" step="0.0002" value="0.5"
+            min="0.0" max="1.0"> overlap </p>
+        <p>
+        <input type="range" name="blend" id="blend" step="0.0002" value="0.5"
+            min="0.0" max="1.0"> blend </p>
+        <p>
+        <input type="range" name="window" id="window" step="0.0002" value="0.5"
+            min="0.0" max="1.0"> window </p>
+        <p>
+        <input type="range" name="pitch" id="pitch" step="0.0002" value="0.5"
+            min="0.0" max="1.0"> pitch </p>
+        <p>
+        <input type="range" name="speed" id="speed" step="0.0002" value="0.5"
+            min="0.0" max="1.0"> speed </p>
+        <br/>
+        <hr/>
         <h3>Log:</h3>
         <div id="main">
             ...
