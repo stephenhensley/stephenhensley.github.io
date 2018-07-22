@@ -29,6 +29,7 @@
                 output = e.target.result;
                 var extension = filePath.files[0].name.split('.').pop().toLowerCase(),
                     isSuccess = fileTypes.indexOf(extension) > -1;
+                console.log("extension: " + extension);
                 if (isSuccess) {
                     if (extension == ".instr") {
                         parseContents(output);
