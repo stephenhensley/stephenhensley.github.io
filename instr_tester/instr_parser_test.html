@@ -59,9 +59,57 @@
         var el = document.getElementById('main'); 
         el.innerHTML = txt; //display output in DOM
     }  
+
+
     var isConfig; // bool
     var configDict; // dict
+    var scoreBody; // string
+    var score;
     var orcBody; // string
+    var orcPreamble; // string
+    var orchestra; // string
+    var scoreInfinite = "f 0 2147483641\n" + "i1 1 -10\n";
+    var orcSetup = "
+    ; File-Looping Orc
+    nchnls=2
+    0dbfs=1
+    ; primary controls
+    gkpitch chnexport "pitch", 1
+    gkspeed chnexport "speed", 1
+    gkloopstart chnexport "start", 1
+    gkloopsize chnexport "size", 1
+    gkdensity chnexport "density", 1
+    gkoverlap chnexport "overlap", 1
+    gkwindow chnexport "window", 1
+    gkfilesel chnexport "file", 1
+    gkfreeze chnexport "freeze", 1
+    gkreset chnexport "reset", 1
+    gkblend chnexport "blend", 1
+    gkrecord chnexport "record", 1
+    gkfilestate chnexport "filestate", 1
+    gksource chnexport "source", 1
+    gkeol chnexport "eol", 2
+    gksizestatus chnexport "sizestatus", 2
+    gkrecordstatus chnexport "recordstatus", 2
+    ; secondary controls
+    gkloopstart_alt chnexport "start_alt", 1
+    gkloopsize_alt chnexport "size_alt", 1
+    gkdensity_alt chnexport "density_alt", 1
+    gkoverlap_alt chnexport "overlap_alt", 1
+    gkwindow_alt chnexport "window_alt", 1
+    gkfreeze_alt chnexport "freeze_alt", 1
+    gkrecord_alt chnexport "record_alt", 1
+    gkreset_alt chnexport "reset_alt", 1
+    gksource_alt chnexport "source_alt", 1
+    gkpitch_alt chnexport "pitch_alt", 1
+    gkblend_alt chnexport "blend_alt", 1
+    ; data buffers -- 100 Files maximum
+    gilen[] init 100
+    gichn[] init 100
+    gSname[] init 100
+    gisr[] init 100
+    gipeak[] init 100
+    ";
     function parseContents(txt) {
         var lines = txt.split(/[\r\n]+/g);
         isConfig = false;
@@ -81,7 +129,27 @@
         }
         console.log("Instr Body");
         console.log(orcBody);
+        // TODO: Fix hardcoded defaults
+        orcPreamble = "; Begin Generated Orchestra Preamble\n";
+        if ("ksmps" in configDict) {
+            var ksmps = configDict["ksmps"][0]; // Add check for valid int
+            orcPreamble = orcPreamble.concat(orcPreamble,"ksmps = " + ksmps +"\n");
+        } else {
+            orcPreamble = orcPreamble.concat(orcPreamble, "ksmps = 128\n");
+        }
+        if ("sr" in configDict) {
+            var sr = configDict["sr"][0]; // Add check for valid int
+            orcPreamble = orcPreamble.concat(orcPreamble,"sr = " + sr +"\n");
+        } else {
+            orcPreamble = orcPreamble.concat(orcPreamble, "sr = 48000\n");
+        }
+        orcPreamble = orcPreamble.concat(orcPreamble, "; End Generated Orchestra Preamble\n");
+        orchestra = orcPreamble + orcSetup + orcBody;
+        console.log("Entire Orchestra Begin");
+        console.log(orchestra);
+        console.log("Entire Orchestra End");
     } 
+
     
     function checkLine(line, idx, arr) {
         // Mark Config Chunks
