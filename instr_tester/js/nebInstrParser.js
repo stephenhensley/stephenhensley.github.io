@@ -3,6 +3,7 @@ class nebInstrParser {
 	constructor() {
 		this.isConfig = false; // bool
 	    this.configDict = {}; // dict
+	    this.audioFileDict = []; // array of obj{name,blob}
 	    this.scoreBody = ""; // string
 	    this.score = ""; // string
 	    this.orcBody = "; Begin User Instr\n";
@@ -51,6 +52,7 @@ class nebInstrParser {
 	}
 
     parseContents(txt) {
+    	console.log("Parsing");
         var lines = txt.split(/[\r\n]+/g);
         for (var i = 0; i < lines.length; i++) {
         	var line = lines[i];
