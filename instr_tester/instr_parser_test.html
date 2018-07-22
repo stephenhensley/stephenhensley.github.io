@@ -61,26 +61,69 @@
             console.log("Read File: " + filePath.files[0].name);
             reader.readAsText(filePath.files[0]);
         }//end if html5 filelist support
-        else if(ActiveXObject && filePath) { //fallback to IE 6-8 support via ActiveX
-            try {
-                reader = new ActiveXObject("Scripting.FileSystemObject");
-                var file = reader.OpenTextFile(filePath, 1); //ActiveX File Object
-                output = file.ReadAll(); //text contents of file
-                file.Close(); //close file "input stream"
-                displayContents(output);
-            } catch (e) {
-                if (e.number == -2146827859) {
-                    alert('Unable to access local files due to browser security settings. ' + 
-                     'To overcome this, go to Tools->Internet Options->Security->Custom Level. ' + 
-                     'Find the setting for "Initialize and script ActiveX controls not marked as safe" and change it to "Enable" or "Prompt"'); 
-                }
-            }       
-        }
         else { //this is where you could fallback to Java Applet, Flash or similar
             return false;
         }       
         return true;
     }   
+
+    function readInstr(filePath) {
+        var fileTypes = ["instr"];
+        var output = ""; //placeholder for text output
+        if(filePath.files && filePath.files[0]) {           
+            reader.onload = function (e) {
+                output = e.target.result;
+                // FIX: This only checks the first extension...
+                var extension = filePath.files[0].name.split('.').pop().toLowerCase(),
+                    isSuccess = fileTypes.indexOf(extension) > -1;
+                if (isSuccess) {
+                    parseContents(output);
+                    displayContents("Read File: " + filePath.files[0].name);
+                }
+            };//end onload()
+            console.log("Read Instr File: " + filePath.files[0].name);
+            reader.readAsText(filePath.files[0]);
+        }//end if html5 filelist support
+        else { //this is where you could fallback to Java Applet, Flash or similar
+            return false;
+        }       
+        return true;
+    }
+
+    function readAudio(filePath) {
+        var fileTypes = ["wav", "aif", "aiff"];
+        var output = ""; //placeholder for text output
+        var audioFileSources = {};
+        if(filePath.files && filePath.files[0]) {           
+            reader.onload = function (e) {
+                // FIX: This only checks the first extension...
+                var extension = filePath.files[0].name.split('.').pop().toLowerCase(),
+                    isSuccess = fileTypes.indexOf(extension) > -1;
+                if (isSuccess) {
+                    audioFileSources = loadAudio(filePath.files);
+                    var prompt = "Found Audio:\n";
+                    for (key in audioFileSources) {
+                        prompt += "file: " + key + "\n";
+                        prompt += "url: " + audioFileSources[key] + "\n";
+                    }
+                    var sound = document.getElementById("sound");
+                    for (var key in audioFileSources) {
+                        sound.src = audioFileSources[key];
+                        sound.onend = function(e) {
+                            URL.revokeObjectURL(audioFileSources[0]);
+                        }
+                    }
+                    displayContents(prompt);                   
+                } 
+            };//end onload()
+            console.log("Read File: " + filePath.files[0].name);
+            reader.readAsText(filePath.files[0]);
+        }//end if html5 filelist support
+        else { //this is where you could fallback to Java Applet, Flash or similar
+            return false;
+        }       
+        return true;
+    }
 
     /**
      * display content using a basic HTML replacement
