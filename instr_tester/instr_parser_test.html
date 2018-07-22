@@ -22,7 +22,7 @@
      * read text input
      */
     function readText(filePath) {
-        var fileTypes = [".instr", ".wav"];
+        var fileTypes = ["instr", "wav"];
         var output = ""; //placeholder for text output
         if(filePath.files && filePath.files[0]) {           
             reader.onload = function (e) {
@@ -31,10 +31,10 @@
                     isSuccess = fileTypes.indexOf(extension) > -1;
                 console.log("extension: " + extension);
                 if (isSuccess) {
-                    if (extension == ".instr") {
+                    if (extension == "instr") {
                         parseContents(output);
                         displayContents("Read File: " + filePath.files[0].name);
-                    } else if (extension == ".wav") {
+                    } else if (extension == "wav") {
                         // TODO: Don't use filereader, use URL to create ObjectURL. (basically a pointer to the original filepath)
                         loadAudio(output);
                         var prompt = "Found Audio:\n";
