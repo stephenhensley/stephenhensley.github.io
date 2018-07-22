@@ -30,7 +30,7 @@
                 displayContents(output);
             };//end onload()
             console.log("Read File: " + filePath.files[0]);
-            reader.readAsText(filePath.files[0]);
+            reader.readAsText(filePath.files[0].name);
         }//end if html5 filelist support
         else if(ActiveXObject && filePath) { //fallback to IE 6-8 support via ActiveX
             try {
