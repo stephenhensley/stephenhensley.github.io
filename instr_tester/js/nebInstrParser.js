@@ -52,7 +52,7 @@ class nebInstrParser {
 
  
 
-    static checkLine(line, idx, arr) {
+    checkLine(line, idx, arr) {
         // Mark Config Chunks
         if (line.includes("nebconfigbegin")) {
             this.isConfig = true;
@@ -79,6 +79,7 @@ class nebInstrParser {
             }
         }
     }
+    
     parseContents(txt) {
         var lines = txt.split(/[\r\n]+/g);
         lines.forEach(this.checkLine);
