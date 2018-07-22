@@ -41,6 +41,7 @@
                         for (var f = 0; f < filePath.files.length; f++) {
                             prompt += "file " + f + ": " + filePath.files[f] + "\n";
                         }
+                        displayContents(prompt);
                     }
                 } else if (extension == ".txt") {
                     displayContents(output);
@@ -188,7 +189,7 @@
 </head>
 <body onload="checkFileAPI();">
     <div id="container">    
-        <input type="file" onchange='readText(this)' />
+        <input type="file" onchange='readText(this)' multiple/>
         <br/>
         <hr/>   
         <h3>Contents of the Text file:</h3>
