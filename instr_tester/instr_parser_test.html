@@ -69,15 +69,15 @@
     var orcPreamble; // string
     var orchestra; // string
     var scoreInfinite = "f 0 2147483641\n" + "i1 1 -10\n";
-    var orcSetup = "
-    ; File-Looping Orc
-    nchnls=2
-    0dbfs=1
-    ; primary controls
-    gkpitch chnexport "pitch", 1
-    gkspeed chnexport "speed", 1
-    gkloopstart chnexport "start", 1
-    gkloopsize chnexport "size", 1
+    var orcSetup = " \
+    ; File-Looping Orc \
+    nchnls=2 \
+    0dbfs=1 \
+    ; primary controls \ 
+    gkpitch chnexport "pitch", 1 \
+    gkspeed chnexport "speed", 1 \
+    gkloopstart chnexport "start", 1 \
+    gkloopsize chnexport "size", 1 \
     gkdensity chnexport "density", 1
     gkoverlap chnexport "overlap", 1
     gkwindow chnexport "window", 1
