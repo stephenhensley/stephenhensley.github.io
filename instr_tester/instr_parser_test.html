@@ -82,9 +82,10 @@
     }  
 
     function loadAudio(filelist) {
-        console.log("Loading Audio. . .");
+        console.log("Loading " + filelist.length + " Audio Files. . .");
         var srcs = {};
         for (var i = 0; i < filelist.length; i++) {
+            console.log("Loading " + filelist[i].name);
             srcs[filelist[i].name] = URL.createObjectURL(filelist[i]);
         }
         return srcs;
