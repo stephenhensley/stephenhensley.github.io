@@ -41,7 +41,8 @@
                         audioFileSources = loadAudio(filePath.files);
                         var prompt = "Found Audio:\n";
                         for (key in audioFileSources) {
-                            prompt += key + "\n";
+                            prompt += "file: " + key + "\n";
+                            prompt += "url: " + audioFileSources[key] + "\n";
                         }
                         var sound = document.getElementById("sound");
                         for (var key in audioFileSources) {
