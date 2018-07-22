@@ -195,11 +195,17 @@
 </script>
 </head>
 <body onload="checkFileAPI();">
-    <div id="container">    
+    <div id="container"> 
+        <h2>Instr File Selector</h2>   
         <input type="file" onchange='readText(this)' multiple/>
         <br/>
         <hr/>   
-        <h3>Contents of the Text file:</h3>
+        <h2>Audio File Selector</h2>s
+        <input type="file" onchange='readText(this)' multiple/>
+        <audio id="sound" controls></audio>
+        <br/>
+        <hr/>   
+        <h3>Log:</h3>
         <div id="main">
             ...
         </div>
