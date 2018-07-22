@@ -55,6 +55,7 @@ class nebInstrParser {
     	console.log("Parsing");
         var lines = txt.split(/[\r\n]+/g);
         for (var i = 0; i < lines.length; i++) {
+        	console.log("parsing line: " + i);
         	var line = lines[i];
         	if (line.includes("nebconfigbegin")) {
 	            this.isConfig = true;
@@ -81,6 +82,7 @@ class nebInstrParser {
 	            }
 	        }
         }
+        console.log("Done scanning text.");
         // TODO: Fix hardcoded defaults
         var ksmpsStr = "ksmps = 128\n";
         var srStr = "sr = 48000\n";
@@ -92,6 +94,7 @@ class nebInstrParser {
             var sr = this.configDict["sr"][0]; // Add check for valid int
             srStr = "sr = " + sr +"\n";
         } 
+        console.log("Assembling orchestra");
         this.orcPreamble = this.orcPreamble + ksmpsStr + srStr + "; End Generated Orchestra Preamble\n";
         this.orchestra = this.orcPreamble + this.orcSetup + this.orcBody;
         console.log("Entire Orchestra Begin");
