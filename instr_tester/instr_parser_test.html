@@ -44,11 +44,14 @@
                             prompt += key + "\n";
                         }
                         var sound = document.getElementById("sound");
-                        sound.src = audioFileSources[0];
-                        displayContents(prompt);
-                        sound.onend = function(e) {
-                            URL.revokeObjectURL(audioFileSources[0]);
+                        for (var key in audioFileSources) {
+                            sound.src = audioFileSources[key];
+                            sound.onend = function(e) {
+                                URL.revokeObjectURL(audioFileSources[0]);
+                            }
                         }
+                        displayContents(prompt);
+                        
                     }
                 } else if (extension == "txt") {
                     displayContents(output);
