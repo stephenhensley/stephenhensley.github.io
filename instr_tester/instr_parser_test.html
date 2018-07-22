@@ -41,9 +41,14 @@
                         audioFileSources = loadAudio(filePath.files);
                         var prompt = "Found Audio:\n";
                         for (key in audioFileSources) {
-                            prompt += audioFileSources[key].name + "\n";
+                            prompt += key + "\n";
                         }
+                        var sound = document.getElementById("sound");
+                        sound.src = audioFileSources[0];
                         displayContents(prompt);
+                        sound.onend = function(e) {
+                            URL.revokeObjectURL(audioFileSources[0]);
+                        }
                     }
                 } else if (extension == "txt") {
                     displayContents(output);
