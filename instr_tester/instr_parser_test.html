@@ -4,7 +4,6 @@
     <title>Read File (via User Input selection)</title>
     <script type="text/javascript">
     var reader; //GLOBAL File Reader object for demo purpose only
-    var isConfig; // GLOBAL bool for test purpose only.
 
     /**
      * Check for the various File API support.
@@ -60,28 +59,54 @@
         var el = document.getElementById('main'); 
         el.innerHTML = txt; //display output in DOM
     }  
-
+    var isConfig; // bool
+    var configDict; // dict
+    var orcBody; // string
     function parseContents(txt) {
         var lines = txt.split(/[\r\n]+/g);
         isConfig = false;
+        configDict = {};
+        orcBody = "; Begin User Instr\n";
         console.log("beginning to parse");
         lines.forEach(checkLine);
         console.log("length " + lines.length);
+        orcBody = orcBody.concat("; End User Instr\n");
+        console.log("Begin Report");
+        console.log("Config:");
+        for (var key in configDict) {
+            console.log("key: " + key);
+            for (var i = 0; i < configDict[key].length; i++) {
+                console.log("val " + i + " :" + configDict[key][i]);
+            }
+        }
+        console.log("Instr Body");
+        console.log(orcBody);
     } 
     
     function checkLine(line, idx, arr) {
-        console.log(idx);
+        // Mark Config Chunks
         if (line.includes("nebconfigbegin")) {
             console.log("Begin Config");
             isConfig = true;
         }
-        if (line.includes("nebconfigend")) {
+        else if (line.includes("nebconfigend")) {
             console.log("End Config");
             isConfig = false;
         }
-        console.log(isConfig);
-        if (isConfig == true) {
-            console.log(line);
+        // Populate Config Dictionary
+        if (isConfig) {
+            var configArray = line.split(/,/);
+            if (configArray.length > 1) {
+                // Array has at least a key, and one value.
+                var key = configArray[0];
+                // TODO: Add check for valid keys.
+                var vals = [];
+                for (var i = 1; i < configArray.length; i++) {
+                    vals.push(configArray[i]);
+                }
+            }
+        } else {
+            orcBody = orcBody.concat(line);
         }
     }
     
