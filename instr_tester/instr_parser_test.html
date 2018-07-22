@@ -83,7 +83,7 @@
 
     function loadAudio(filelist) {
         console.log("Loading Audio. . .");
-        var srcs = [];
+        var srcs = {};
         for (var i = 0; i < filelist.length; i++) {
             srcs[filelist[i].name] = URL.createObjectURL(filelist[i]);
         }
