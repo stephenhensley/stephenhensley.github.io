@@ -50,41 +50,36 @@ class nebInstrParser {
 	    "gipeak[] init 100\n"; 
 	}
 
- 
-
-    checkLine(line, idx, arr) {
-        // Mark Config Chunks
-        if (line.includes("nebconfigbegin")) {
-            this.isConfig = true;
-        }
-        else if (line.includes("nebconfigend")) {
-            this.isConfig = false;
-        }
-        // Populate Config Dictionary
-        if (this.isConfig) {
-            var configArray = line.split(/,/);
-            if (configArray.length > 1) {
-                // Array has at least a key, and one value.
-                var key = configArray[0];
-                // TODO: Add check for valid keys.
-                var vals = [];
-                for (var i = 1; i < configArray.length; i++) {
-                    vals.push(configArray[i]);
-                }
-                this.configDict[key] = vals;
-            }
-        } else {
-            if (!line.includes("nebconfigend")) {
-                this.orcBody = this.orcBody.concat(line+'\n');
-            }
-        }
-    }
-    
     parseContents(txt) {
         var lines = txt.split(/[\r\n]+/g);
-        lines.forEach(this.checkLine);
+        for (var i = 0; i < lines.length; i++) {
+        	var line = lines[i];
+        	if (line.includes("nebconfigbegin")) {
+	            this.isConfig = true;
+	        }
+	        else if (line.includes("nebconfigend")) {
+	            this.isConfig = false;
+	        }
+	        // Populate Config Dictionary
+	        if (this.isConfig) {
+	            var configArray = line.split(/,/);
+	            if (configArray.length > 1) {
+	                // Array has at least a key, and one value.
+	                var key = configArray[0];
+	                // TODO: Add check for valid keys.
+	                var vals = [];
+	                for (var i = 1; i < configArray.length; i++) {
+	                    vals.push(configArray[i]);
+	                }
+	                this.configDict[key] = vals;
+	            }
+	        } else {
+	            if (!line.includes("nebconfigend")) {
+	                this.orcBody = this.orcBody.concat(line+'\n');
+	            }
+	        }
+        }
         // TODO: Fix hardcoded defaults
-
         var ksmpsStr = "ksmps = 128\n";
         var srStr = "sr = 48000\n";
         if ("ksmps" in this.configDict) {
