@@ -26,8 +26,8 @@
         if(filePath.files && filePath.files[0]) {           
             reader.onload = function (e) {
                 output = e.target.result;
-                parseContents(output);
-                //displayContents(output);
+                //parseContents(output);
+                displayContents(output);
             };//end onload()
             reader.readAsText(filePath.files[0]);
         }//end if html5 filelist support
@@ -113,20 +113,7 @@
         isConfig = false;
         configDict = {};
         orcBody = "; Begin User Instr\n";
-        console.log("beginning to parse");
         lines.forEach(checkLine);
-        console.log("length " + lines.length);
-        orcBody = orcBody.concat("; End User Instr\n");
-        console.log("Begin Report");
-        console.log("Config:");
-        for (var key in configDict) {
-            console.log("key: " + key);
-            for (var i = 0; i < configDict[key].length; i++) {
-                console.log("val " + i + " :" + configDict[key][i]);
-            }
-        }
-        console.log("Instr Body");
-        console.log(orcBody);
         // TODO: Fix hardcoded defaults
         orcPreamble = "; Begin Generated Orchestra Preamble\n";
         var ksmpsStr = "ksmps = 128\n";
@@ -150,11 +137,9 @@
     function checkLine(line, idx, arr) {
         // Mark Config Chunks
         if (line.includes("nebconfigbegin")) {
-            console.log("Begin Config");
             isConfig = true;
         }
         else if (line.includes("nebconfigend")) {
-            console.log("End Config");
             isConfig = false;
         }
         // Populate Config Dictionary
