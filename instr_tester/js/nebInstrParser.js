@@ -1,5 +1,5 @@
 class nebInstrParser {
-	
+
 	constructor() {
 		this.isConfig = false; // bool
 	    this.configDict = {}; // dict
@@ -50,27 +50,7 @@ class nebInstrParser {
 	    "gipeak[] init 100\n"; 
 	}
 
-    parseContents(txt) {
-        var lines = txt.split(/[\r\n]+/g);
-        lines.forEach(checkLine);
-        // TODO: Fix hardcoded defaults
-
-        var ksmpsStr = "ksmps = 128\n";
-        var srStr = "sr = 48000\n";
-        if ("ksmps" in this.configDict) {
-            var ksmps = this.configDict["ksmps"][0]; // Add check for valid int
-            ksmpsStr = "ksmps = " + ksmps +"\n";
-        } 
-        if ("sr" in this.configDict) {
-            var sr = this.configDict["sr"][0]; // Add check for valid int
-            srStr = "sr = " + sr +"\n";
-        } 
-        this.orcPreamble = this.orcPreamble + ksmpsStr + srStr + "; End Generated Orchestra Preamble\n";
-        this.orchestra = this.orcPreamble + this.orcSetup + this.orcBody;
-        console.log("Entire Orchestra Begin");
-        console.log(this.orchestra);
-        console.log("Entire Orchestra End");
-    } 
+ 
 
     static checkLine(line, idx, arr) {
         // Mark Config Chunks
@@ -98,5 +78,26 @@ class nebInstrParser {
                 this.orcBody = this.orcBody.concat(line+'\n');
             }
         }
+    }
+    parseContents(txt) {
+        var lines = txt.split(/[\r\n]+/g);
+        lines.forEach(this.checkLine);
+        // TODO: Fix hardcoded defaults
+
+        var ksmpsStr = "ksmps = 128\n";
+        var srStr = "sr = 48000\n";
+        if ("ksmps" in this.configDict) {
+            var ksmps = this.configDict["ksmps"][0]; // Add check for valid int
+            ksmpsStr = "ksmps = " + ksmps +"\n";
+        } 
+        if ("sr" in this.configDict) {
+            var sr = this.configDict["sr"][0]; // Add check for valid int
+            srStr = "sr = " + sr +"\n";
+        } 
+        this.orcPreamble = this.orcPreamble + ksmpsStr + srStr + "; End Generated Orchestra Preamble\n";
+        this.orchestra = this.orcPreamble + this.orcSetup + this.orcBody;
+        console.log("Entire Orchestra Begin");
+        console.log(this.orchestra);
+        console.log("Entire Orchestra End");
     }
 }
