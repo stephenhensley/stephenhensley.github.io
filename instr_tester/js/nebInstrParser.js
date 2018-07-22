@@ -54,9 +54,8 @@ class nebInstrParser {
     parseContents(txt) {
     	console.log("Parsing");
         var lines = txt.split(/[\r\n]+/g);
-        for (var i = 0; i < lines.length; i++) {
-        	console.log("parsing line: " + i);
-        	var line = lines[i];
+        for (var line in lines) {
+        	console.log("Parsing: " + line);
         	if (line.includes("nebconfigbegin")) {
 	            this.isConfig = true;
 	        }
