@@ -22,12 +22,28 @@
      * read text input
      */
     function readText(filePath) {
+        var fileTypes = [".instr", ".wav"];
         var output = ""; //placeholder for text output
         if(filePath.files && filePath.files[0]) {           
             reader.onload = function (e) {
                 output = e.target.result;
-                //parseContents(output);
-                displayContents(output);
+                var extension = filePath.files[0].name.split('.').pop().toLowerCase(),
+                    isSuccess = fileTypes.indexOf(extension) > -1;
+                if (isSuccess) {
+                    if (extension == ".instr") {
+                        parseContents(output);
+                        displayContents("Read File: " + filePath.files[0].name);
+                    } else if (extension == ".wav") {
+                        // TODO: Don't use filereader, use URL to create ObjectURL. (basically a pointer to the original filepath)
+                        loadAudio(output);
+                        var prompt = "Found Audio:\n";
+                        for (var f = 0; f < filePath.files.length; f++) {
+                            prompt += "file " + f + ": " + filePath.files[f] + "\n";
+                        }
+                    }
+                } else if (extension == ".txt") {
+                    displayContents(output);
+                }
             };//end onload()
             console.log("Read File: " + filePath.files[0].name);
             reader.readAsText(filePath.files[0]);
@@ -60,6 +76,10 @@
         var el = document.getElementById('main'); 
         el.innerHTML = txt; //display output in DOM
     }  
+
+    function loadAudio(wav) {
+        console.log("Loading Audio. . .  (But not really yet)");
+    }
 
 
     var isConfig; // bool
