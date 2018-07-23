@@ -116,10 +116,6 @@ if(typeof AudioWorkletNode !== 'undefined' &&
       this.node.port.postMessage(["reset"]);
     }
 
-    CopyUrlToLocal(src, dst) {
-      this.node.port.postMessage(["CopyUrlToLocal"], src, dst]);
-    }
-
     destroy() {
     }
 
