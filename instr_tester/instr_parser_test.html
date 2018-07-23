@@ -15,6 +15,8 @@
         //console.log = print_msg;
         //console.warn = print_msg;
         csound = new CsoundObj();
+        checkFileAPI();
+        parser = new nebInstrParser();
         SetParam("size", '', 1., 0.);
         SetParam("start", '', 1., 0.);
         SetParam("density", '', 1., 0.);
@@ -31,10 +33,8 @@
         }, false);
     }
     function onPageLoad() {
-        csound = new CsoundObj();
-        parser = new nebInstrParser();
-        checkFileAPI();
-        displayContents("Updated at 6:18PM 7/22/2018");
+        //csound = new CsoundObj();
+        displayContents("Updated at 6:59PM 7/22/2018");
     }
 
     function checkFileAPI() {
