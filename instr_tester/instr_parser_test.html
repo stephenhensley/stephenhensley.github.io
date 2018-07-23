@@ -87,7 +87,7 @@
                         prompt += "url: " + audioFileSources[key] + "\n";
                         var obj = {};
                         obj["name"] = key;
-                        obj["url"] = audioFileSources[key].replace(/blob:/,".\//");
+                        obj["url"] = audioFileSources[key].replace(/blob:/,".\/");
                         formatted_list.push(obj);
                     }
                     parser.fillAudioList(formatted_list);
