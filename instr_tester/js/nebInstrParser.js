@@ -3,9 +3,9 @@ class nebInstrParser {
 	constructor() {
 		this.isConfig = false; // bool
 	    this.configDict = {}; // dict
-	    this.audioFileDict = []; // array of obj{name,blob}
-	    this.scoreBody = ""; // string
+	    this.audioFileList = []; // array of obj{name,blob}
 	    this.score = ""; // string
+	    this.csd = "";
 	    this.orcBody = "; Begin User Instr\n";
 	    this.orcPreamble = "; Begin Generated Orchestra Preamble\n";
 	    this.orchestra = ""; // string
@@ -92,5 +92,33 @@ class nebInstrParser {
         } 
         this.orcPreamble = this.orcPreamble + ksmpsStr + srStr + "; End Generated Orchestra Preamble\n";
         this.orchestra = this.orcPreamble + this.orcSetup + this.orcBody;
+    }
+
+    fillAudioList(filelist) {
+    	self.audioFileList = filelist;
+    }
+
+    generateSco() {
+    	var score = "";
+    	score += this.scoreInfinite;
+    	for (var i = 0; i < this.audioFileList.length; i++) {
+    		score += "f " + (400 + i) + " 0 0 1 \"" + f + "\" 0 0 1\n";
+    		score += "gSname[" + i +"] = \"" + f + "\"\n";
+            score += "gilen[" + str(i) +"] filelen \"" + f + "\"\n";
+            score += "gichn[" + str(i) +"] filenchnls \"" + f + "\"\n";
+            score += "gisr[" + str(i) +"] filesr \"" + f + "\"\n";
+            score += "gipeak[" + str(i) +"] filepeak \"" + f + "\"\n";
+        	score += "ginumfiles init " + this.audioFileList.length + "\n";
+    	}
+    	this.score = score;
+    }
+
+    generateCsd() {
+    	var csd = this.orchestra + this.score;
+    	self.csd = csd;
+    }
+
+    getCsd() {
+    	return this.csd;
     }
 }
