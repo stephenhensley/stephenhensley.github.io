@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Read File (via User Input selection)</title>
+    <script src="js/CsoundObj.js"></script>
     <script src="js/nebInstrParser.js"></script>
     <script type="text/javascript">
     var reader; //GLOBAL File Reader object for demo purpose only
@@ -9,7 +10,28 @@
     /**
      * Check for the various File API support.
      */
+     // this will get called when WASM is loaded
+    function moduleDidLoad() {
+        console.log = print_msg;
+        console.warn = print_msg;
+        csound = new CsoundObj();
+        SetParam("size", '', 1., 0.);
+        SetParam("start", '', 1., 0.);
+        SetParam("density", '', 1., 0.);
+        SetParam("overlap", '', 1., 0.);
+        SetParam("blend", '', 1., 0.);
+        SetParam("window", '', 1., 0.);
+        SetParam("pitch", '', 1., 0.);
+        SetParam("speed", '', 1., 0.);
+        attachListeners();
+        //csound.start();
+        window.addEventListener("unload", function(e){
+        if(csound != null)
+               csound.destroy();
+        }, false);
+    }
     function onPageLoad() {
+        csound = new CsoundObj();
         parser = new nebInstrParser();
         checkFileAPI();
         displayContents("Updated at 6:18PM 7/22/2018");
@@ -28,7 +50,6 @@
     function readInstr(filePath) {
         var fileTypes = ["instr"];
         var output = ""; //placeholder for text output
-
         if(filePath.files && filePath.files[0]) {           
             reader.onload = function (e) {
                 output = e.target.result;
@@ -92,6 +113,59 @@
         parser.generateCsd();
         var csd = parser.getCsd();
         displayContents(csd);
+        csound.reset();
+        csound.compileCSD(csd);
+        csound.start();
+    }
+    // attach callbacks to sliders
+    function attachListeners() {
+       document.getElementById("size").
+           addEventListener("input",SetSize);
+       document.getElementById("start").
+           addEventListener("input",SetStart);
+       document.getElementById("density").
+           addEventListener("input",SetDensity);   
+       document.getElementById("overlap").
+           addEventListener("input",SetOverlap);
+       document.getElementById("blend").
+           addEventListener("input",SetBlend);   
+        document.getElementById("window").
+           addEventListener("input",SetWindow);   
+        document.getElementById("speed").
+           addEventListener("input",SetSpeed);   
+        document.getElementById("pitch").
+           addEventListener("input",SetPitch);   
+    }
+    // set parameter
+    function SetParam(name, label, scal, off) {
+        var val = document.getElementById(name).value/scal + off;
+        csound.setControlChannel(name, val);
+        console.log(name + ": " + val + " " + label);
+    }
+    // set amplitude
+    function SetSize(){
+        SetParam('size', '', 1., 0.0);
+    }
+    function SetStart(){
+        SetParam('start', '', 1., 0.0);
+    }
+    function SetDensity(){
+        SetParam('density', '', 1., 0.0);
+    }
+    function SetOverlap(){
+        SetParam('overlap', '', 1., 0.0);
+    }
+    function SetBlend(){
+        SetParam('blend', '', 1., 0.0);
+    }
+    function SetWindow(){
+        SetParam('window', '', 1., 0.0);
+    }
+    function SetSpeed(){
+        SetParam('speed', '', 1., 0.0);
+    }
+    function SetPitch(){
+        SetParam('pitch', '', 1., 0.0);
     }
     /**
      * display content using a basic HTML replacement
