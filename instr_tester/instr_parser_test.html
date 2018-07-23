@@ -89,6 +89,7 @@
                         obj["name"] = key;
                         obj["url"] = audioFileSources[key].replace(/blob:/,".\/");
                         formatted_list.push(obj);
+                        csound.CopyUrlToLocal(obj["url"], "./");
                     }
                     parser.fillAudioList(formatted_list);
                     var sound = document.getElementById("sound");
