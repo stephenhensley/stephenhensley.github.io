@@ -113,7 +113,18 @@
         parser.generateCsd();
         var csd = parser.getCsd();
         displayContents(csd);
-        csound.reset();
+        if (csound != null) {
+            csound.destroy();
+        }
+        csound = new CsoundObj();
+        SetParam("size", '', 1., 0.);
+        SetParam("start", '', 1., 0.);
+        SetParam("density", '', 1., 0.);
+        SetParam("overlap", '', 1., 0.);
+        SetParam("blend", '', 1., 0.);
+        SetParam("window", '', 1., 0.);
+        SetParam("pitch", '', 1., 0.);
+        SetParam("speed", '', 1., 0.);
         csound.compileCSD(csd);
         csound.start();
     }
