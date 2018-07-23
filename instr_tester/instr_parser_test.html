@@ -88,13 +88,17 @@
         }       
         return true;
     }
-
+    function reloadInstr() {
+        parser.generateCsd();
+        var csd = parser.getCsd();
+        displayContents(csd);
+    }
     /**
      * display content using a basic HTML replacement
      */
     function displayContents(txt) {
         var el = document.getElementById('main'); 
-        el.innerHTML = txt; //display output in DOM
+        el.innerHTML = "<pre>" + txt + "</pre>"; //display output in DOM
     }  
 
     function loadAudio(filelist) {

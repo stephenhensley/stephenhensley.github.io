@@ -114,6 +114,7 @@ class nebInstrParser {
     }
 
     generateCsd() {
+    	this.generateSco();
     	var csd = this.orchestra + this.score;
     	self.csd = csd;
     }
