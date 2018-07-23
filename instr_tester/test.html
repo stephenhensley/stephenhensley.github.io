@@ -11,8 +11,8 @@
 // this will get called when WASM is loaded
 function moduleDidLoad() {
   clear_console();
-  console.log = print_msg;
-  console.warn = print_msg;
+  //console.log = print_msg;
+  //console.warn = print_msg;
   csound = new CsoundObj();
   csound.compileOrc(document.getElementById('instruments').value);
   SetParam("amp", '', 1000., 0.);

@@ -12,8 +12,8 @@
      */
      // this will get called when WASM is loaded
     function moduleDidLoad() {
-        console.log = print_msg;
-        console.warn = print_msg;
+        //console.log = print_msg;
+        //console.warn = print_msg;
         csound = new CsoundObj();
         SetParam("size", '', 1., 0.);
         SetParam("start", '', 1., 0.);
