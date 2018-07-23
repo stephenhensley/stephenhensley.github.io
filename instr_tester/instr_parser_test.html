@@ -114,6 +114,8 @@
         var csd = parser.getCsd();
         displayContents(csd);
         csound.reset();
+        csound.compileOrc(parser.orchestra);
+        csound.readScore(parser.score);
         SetParam("size", '', 1., 0.);
         SetParam("start", '', 1., 0.);
         SetParam("density", '', 1., 0.);
@@ -122,13 +124,11 @@
         SetParam("window", '', 1., 0.);
         SetParam("pitch", '', 1., 0.);
         SetParam("speed", '', 1., 0.);
-        csound.compileOrc(parser.orchestra);
-        csound.readScore(parser.score);
         csound.start();
     }
     // attach callbacks to sliders
     function attachListeners() {
-        /*
+       
        document.getElementById("size").
            addEventListener("input",SetSize);
        document.getElementById("start").
@@ -145,7 +145,7 @@
            addEventListener("input",SetSpeed);   
         document.getElementById("pitch").
            addEventListener("input",SetPitch);
-           */   
+         
     }
     // set parameter
     function SetParam(name, label, scal, off) {
