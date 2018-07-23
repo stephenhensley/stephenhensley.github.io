@@ -95,6 +95,7 @@ class nebInstrParser {
     }
 
     fillAudioList(filelist) {
+    	console.log("Filling Audio File List");
     	self.audioFileList = filelist;
     }
 
@@ -104,10 +105,10 @@ class nebInstrParser {
     	for (var i = 0; i < this.audioFileList.length; i++) {
     		score += "f " + (400 + i) + " 0 0 1 \"" + f + "\" 0 0 1\n";
     		score += "gSname[" + i +"] = \"" + f + "\"\n";
-            score += "gilen[" + str(i) +"] filelen \"" + f + "\"\n";
-            score += "gichn[" + str(i) +"] filenchnls \"" + f + "\"\n";
-            score += "gisr[" + str(i) +"] filesr \"" + f + "\"\n";
-            score += "gipeak[" + str(i) +"] filepeak \"" + f + "\"\n";
+            score += "gilen[" + i +"] filelen \"" + f + "\"\n";
+            score += "gichn[" + i +"] filenchnls \"" + f + "\"\n";
+            score += "gisr[" + i +"] filesr \"" + f + "\"\n";
+            score += "gipeak[" + i +"] filepeak \"" + f + "\"\n";
         	score += "ginumfiles init " + this.audioFileList.length + "\n";
     	}
     	this.score = score;
