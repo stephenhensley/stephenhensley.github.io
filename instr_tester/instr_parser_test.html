@@ -113,10 +113,7 @@
         parser.generateCsd();
         var csd = parser.getCsd();
         displayContents(csd);
-        if (csound != null) {
-            csound.destroy();
-        }
-        csound = new CsoundObj();
+        csound.stop();
         SetParam("size", '', 1., 0.);
         SetParam("start", '', 1., 0.);
         SetParam("density", '', 1., 0.);
@@ -126,6 +123,7 @@
         SetParam("pitch", '', 1., 0.);
         SetParam("speed", '', 1., 0.);
         csound.compileCSD(csd);
+        csound.perform();
         csound.start();
     }
     // attach callbacks to sliders
