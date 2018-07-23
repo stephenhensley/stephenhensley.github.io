@@ -19,7 +19,6 @@ class nebInstrParser {
 	    "gSname[] init 100\n" +
 	    "gisr[] init 100\n" +
 	    "gipeak[] init 100\n"; 
-	    /*
 	    "; primary controls\n" +
 	    "gkpitch chnexport \"pitch\", 1 \n" +
 	    "gkspeed chnexport \"speed\", 1 \n" +
@@ -50,7 +49,6 @@ class nebInstrParser {
 	    "gksource_alt chnexport \"source_alt\", 1\n" +
 	    "gkpitch_alt chnexport \"pitch_alt\", 1\n" +
 	    "gkblend_alt chnexport \"blend_alt\", 1\n" +
-	    */
 	}
 
     parseContents(txt) {
