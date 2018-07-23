@@ -13,6 +13,13 @@ class nebInstrParser {
 	    this.orcSetup = "; File-Looping Orc\n" + 
 	    "nchnls=2\n" +
 	    "0dbfs=1\n" + 
+	    "; data buffers -- 100 Files maximum\n" +
+	    "gilen[] init 100\n" +
+	    "gichn[] init 100\n" +
+	    "gSname[] init 100\n" +
+	    "gisr[] init 100\n" +
+	    "gipeak[] init 100\n"; 
+	    /*
 	    "; primary controls\n" +
 	    "gkpitch chnexport \"pitch\", 1 \n" +
 	    "gkspeed chnexport \"speed\", 1 \n" +
@@ -43,12 +50,7 @@ class nebInstrParser {
 	    "gksource_alt chnexport \"source_alt\", 1\n" +
 	    "gkpitch_alt chnexport \"pitch_alt\", 1\n" +
 	    "gkblend_alt chnexport \"blend_alt\", 1\n" +
-	    "; data buffers -- 100 Files maximum\n" +
-	    "gilen[] init 100\n" +
-	    "gichn[] init 100\n" +
-	    "gSname[] init 100\n" +
-	    "gisr[] init 100\n" +
-	    "gipeak[] init 100\n"; 
+	    */
 	}
 
     parseContents(txt) {
