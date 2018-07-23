@@ -103,6 +103,7 @@ class nebInstrParser {
     	var score = "";
     	score += this.scoreInfinite;
     	for (var i = 0; i < this.audioFileList.length; i++) {
+    		var f = this.audioFileList[i].url;
     		score += "f " + (400 + i) + " 0 0 1 \"" + f + "\" 0 0 1\n";
     		score += "gSname[" + i +"] = \"" + f + "\"\n";
             score += "gilen[" + i +"] filelen \"" + f + "\"\n";
