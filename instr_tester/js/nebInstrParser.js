@@ -54,15 +54,15 @@ class nebInstrParser {
     parseContents(txt) {
         var lines = txt.split(/[\r\n]+/g);
         for (var line in lines) {
-        	if (line.includes("nebconfigbegin")) {
+        	if (lines[line].includes("nebconfigbegin")) {
 	            this.isConfig = true;
 	        }
-	        else if (line.includes("nebconfigend")) {
+	        else if (lines[line].includes("nebconfigend")) {
 	            this.isConfig = false;
 	        }
 	        // Populate Config Dictionary
 	        if (this.isConfig) {
-	            var configArray = line.split(/,/);
+	            var configArray = lines[line].split(/,/);
 	            if (configArray.length > 1) {
 	                // Array has at least a key, and one value.
 	                var key = configArray[0];
@@ -74,8 +74,8 @@ class nebInstrParser {
 	                this.configDict[key] = vals;
 	            }
 	        } else {
-	            if (!line.includes("nebconfigend")) {
-	                this.orcBody = this.orcBody.concat(line+'\n');
+	            if (!lines[line].includes("nebconfigend")) {
+	                this.orcBody += lines[line] + "\n";
 	            }
 	        }
         }
@@ -96,7 +96,7 @@ class nebInstrParser {
 
     fillAudioList(filelist) {
     	console.log("Filling Audio File List");
-    	self.audioFileList = filelist;
+    	this.audioFileList = filelist;
     }
 
     generateSco() {
@@ -117,7 +117,7 @@ class nebInstrParser {
     generateCsd() {
     	this.generateSco();
     	var csd = this.orchestra + this.score;
-    	self.csd = csd;
+    	this.csd = csd;
     }
 
     getCsd() {
