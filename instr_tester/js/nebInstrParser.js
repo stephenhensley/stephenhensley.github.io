@@ -119,13 +119,13 @@ class nebInstrParser {
     		var f;
     		switch(i) {
     			case 0:
-    				f = "/audio/Crazy.wav";
+    				f = "./audio/Crazy.wav";
     				break;
     			case 1:
-    				f = "/audio/LoveIt.wav";
+    				f = "./audio/LoveIt.wav";
     				break;
     			default:
-    				f = "/audio/Crazy.wav";
+    				f = "./audio/Crazy.wav";
     				break;
     		}
     		score += "f " + (400 + i) + " 0 0 1 \"" + f + "\" 0 0 1\n";
