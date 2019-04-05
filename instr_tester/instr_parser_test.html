@@ -96,8 +96,6 @@
                         sound.src = audioFileSources[key];
                         sound.onend = function(e) {
                             URL.revokeObjectURL(audioFileSources[0]);
-                        // Copy to WASM Filesystem
-                        csound.writeToFS("./local/"+audioFileSources[0])
                         }
                     }
                     displayContents(prompt);                   
@@ -194,6 +192,8 @@
         for (var i = 0; i < filelist.length; i++) {
             console.log("Loading " + filelist[i].name);
             srcs[filelist[i].name] = URL.createObjectURL(filelist[i]);
+            // Copy to WASM Filesystem
+            csound.writeToFS("./local/"+filelist[i].name, srcs[filelist[i].name])
             console.log("Loaded Source: " + srcs[filelist[i].name]);
         }
         return srcs;
