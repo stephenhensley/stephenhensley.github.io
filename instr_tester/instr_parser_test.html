@@ -15,6 +15,7 @@
         //console.log = print_msg;
         //console.warn = print_msg;
         csound = new CsoundObj();
+        checkFileAPI();
         parser = new nebInstrParser();
         SetParam("size", '', 1., 0.);
         SetParam("start", '', 1., 0.);
@@ -33,13 +34,7 @@
     }
     function onPageLoad() {
         //csound = new CsoundObj();
-        displayContents("Updated at 7:39PM 4 April 2019")
-        if (checkFileAPI()) {
-            console.log("File API Valid")
-        } else {
-            console.log("File API Invalid")
-        }
-
+        displayContents("Updated at 6:59PM 7/22/2018");
     }
 
     function checkFileAPI() {
@@ -55,8 +50,7 @@
     function readInstr(filePath) {
         var fileTypes = ["instr"];
         var output = ""; //placeholder for text output
-        //var fapi_valid = checkFileAPI()
-        if(filePath.files && filePath.files[0]) {
+        if(filePath.files && filePath.files[0]) {           
             reader.onload = function (e) {
                 output = e.target.result;
                 // FIX: This only checks the first extension...
@@ -131,7 +125,6 @@
         SetParam("pitch", '', 1., 0.);
         SetParam("speed", '', 1., 0.);
         csound.start();
-        CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
     }
     // attach callbacks to sliders
     function attachListeners() {
@@ -199,12 +192,12 @@
         for (var i = 0; i < filelist.length; i++) {
             console.log("Loading " + filelist[i].name);
             srcs[filelist[i].name] = URL.createObjectURL(filelist[i]);
-            // Copy to WASM Filesystem
-            csound.writeToFS("./local/"+filelist[i].name, srcs[filelist[i].name])
             console.log("Loaded Source: " + srcs[filelist[i].name]);
         }
         return srcs;
     }
+    CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
+    
 </script>
 </head>
 <body onload="onPageLoad();">
