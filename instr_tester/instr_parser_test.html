@@ -3,8 +3,6 @@
   <head>
     <title>Read File (via User Input selection)</title>
     <script src="js/CsoundObj.js"></script>
-    <script src="js/CsoundNode.js"></script>
-    <script src="js/CsoundScriptProcessorNode.js"></script>
     <script src="js/nebInstrParser.js"></script>
     <script type="text/javascript">
     var reader; //GLOBAL File Reader object for demo purpose only
@@ -128,6 +126,7 @@
         SetParam("speed", '', 1., 0.);
         csound.start();
     }
+    CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
     // attach callbacks to sliders
     function attachListeners() {
        
@@ -200,7 +199,6 @@
         }
         return srcs;
     }
-    CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
     
 </script>
 </head>
