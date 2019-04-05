@@ -96,6 +96,8 @@
                         sound.src = audioFileSources[key];
                         sound.onend = function(e) {
                             URL.revokeObjectURL(audioFileSources[0]);
+                        // Copy to WASM Filesystem
+                        parser.writeToFS("./local/"+audioFileSources[0])
                         }
                     }
                     displayContents(prompt);                   
