@@ -102,9 +102,8 @@ class nebInstrParser {
     generateSco() {
     	var score = "";
     	score += this.scoreInfinite;
-    	/*
     	for (var i = 0; i < this.audioFileList.length; i++) {
-    		var f = this.audioFileList[i].url;
+    		var f = "./local/" + this.audioFileList[i].name;
     		score += "f " + (400 + i) + " 0 0 1 \"" + f + "\" 0 0 1\n";
     		score += "gSname[" + i +"] = \"" + f + "\"\n";
             score += "gilen[" + i +"] filelen \"" + f + "\"\n";
@@ -113,31 +112,6 @@ class nebInstrParser {
             score += "gipeak[" + i +"] filepeak \"" + f + "\"\n";
         	score += "ginumfiles init " + this.audioFileList.length + "\n";
     	}
-    	*/
-    	// TEMP HARDCODED FOR TEST.
-    	for (var i = 0; i < 2; i++) {
-    		var f;
-    		switch(i) {
-    			case 0:
-    				f = "./audio/Crazy.wav";
-    				break;
-    			case 1:
-    				f = "./audio/LoveIt.wav";
-    				break;
-    			default:
-    				f = "./audio/Crazy.wav";
-    				break;
-    		}
-    		score += "f " + (400 + i) + " 0 0 1 \"" + f + "\" 0 0 1\n";
-    		score += "gSname[" + i +"] = \"" + f + "\"\n";
-            score += "gilen[" + i +"] filelen \"" + f + "\"\n";
-            score += "gichn[" + i +"] filenchnls \"" + f + "\"\n";
-            score += "gisr[" + i +"] filesr \"" + f + "\"\n";
-            score += "gipeak[" + i +"] filepeak \"" + f + "\"\n";
-        	score += "ginumfiles init " + 2 + "\n";
-    	}
-    	
-
     	this.score = score;
     }
 
