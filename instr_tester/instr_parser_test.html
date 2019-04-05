@@ -126,14 +126,6 @@
         SetParam("speed", '', 1., 0.);
         csound.start();
     }
-    var promise = CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
-    if (promise !== undefined) {
-        promise.then(_ => {
-            // Autoplay started!
-        }).catch(error => {
-            // Autoplay prevented.
-        });
-    }
     // attach callbacks to sliders
     function attachListeners() {
        
@@ -206,7 +198,14 @@
         }
         return srcs;
     }
-    
+    var promise = CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
+    if (promise !== undefined) {
+        promise.then(_ => {
+            // Autoplay started!
+        }).catch(error => {
+            // Autoplay prevented.
+        });
+    }
 </script>
 </head>
 <body onload="onPageLoad();">
