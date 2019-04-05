@@ -125,6 +125,7 @@
         SetParam("pitch", '', 1., 0.);
         SetParam("speed", '', 1., 0.);
         csound.start();
+        CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
     }
     // attach callbacks to sliders
     function attachListeners() {
@@ -197,14 +198,6 @@
             console.log("Loaded Source: " + srcs[filelist[i].name]);
         }
         return srcs;
-    }
-    var promise = CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
-    if (promise !== undefined) {
-        promise.then(_ => {
-            // Autoplay started!
-        }).catch(error => {
-            // Autoplay prevented.
-        });
     }
 </script>
 </head>
