@@ -33,7 +33,13 @@
     }
     function onPageLoad() {
         //csound = new CsoundObj();
-        displayContents("Updated at 6:59PM 7/22/2018");
+        displayContents("Updated at 7:39PM 4 April 2019")
+        if (checkFileAPI()) {
+            console.log("File API Valid")
+        } else {
+            console.log("File API Invalid")
+        }
+
     }
 
     function checkFileAPI() {
@@ -49,8 +55,8 @@
     function readInstr(filePath) {
         var fileTypes = ["instr"];
         var output = ""; //placeholder for text output
-        var fapi_valid = checkFileAPI()
-        if(filePath.files && filePath.files[0] && fapi_valid) {           
+        //var fapi_valid = checkFileAPI()
+        if(filePath.files && filePath.files[0]) {
             reader.onload = function (e) {
                 output = e.target.result;
                 // FIX: This only checks the first extension...
