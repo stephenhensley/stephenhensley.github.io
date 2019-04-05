@@ -199,9 +199,11 @@
         }
         return srcs;
     }
+    window.onload = onPageLoad();
 </script>
 </head>
-<body onload="onPageLoad();">
+<!--body onload="onPageLoad();">-->
+<body>
     <div id="container"> 
         <h2>Instr File Selector</h2>   
         <input type="file" onchange='readInstr(this)'/>
