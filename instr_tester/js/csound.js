@@ -1,7 +1,7 @@
 /*
  * Csound JS frontend, adapted from PNaCl Csound
  *
- * Copyright (C) 2017 V Lazzarini
+ * Copyright (C) 2017-8 V Lazzarini
  *
  * This file belongs to Csound.
  *
@@ -19,10 +19,18 @@
  * License along with this software; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-var csound = (function() {
+
+
+
+/** 
+* @classdesc Csound frontend class, wrapping CsoundObj
+*
+* @constructor 
+*/
+Csound = function() {
     var Csound = null;
     function load_dep(file, elm, callback) {
-        var jsl = document.createElement(elm);
+        var jsl = document.createElementNS("http://www.w3.org/1999/xhtml", elm);
         jsl.type = "text/javascript";
         jsl.src = file;
         document.getElementsByTagName("head")[0].appendChild(jsl)
@@ -49,20 +57,19 @@ var csound = (function() {
                 CsoundObj.importScripts(path).then(() => {
                     console.log("loaded WASM runtime");
                     csound.Csound = new CsoundObj();
-		    // csound.Csound.setOption("-M0");
-                    // csound.Csound.setMidiCallbacks();
                     csound.module = true;
                     if (typeof window.handleMessage !== 'undefined') { 
                         console.log = console.warn = function(mess) {
                             mess += "\n";
                             window.handleMessage(mess);
-                            }
+                        }
+                        csound.Csound.setMessageCallback(console.log);
                     }
                     if (typeof window.moduleDidLoad !== 'undefined')
                         window.moduleDidLoad();
                     if (typeof window.attachListeners !== 'undefined') 
                         window.attachListeners();
-		    csound.updateStatus('Ready.');
+                    csound.UpdateStatus('Ready.');
                 });
             });
     }
@@ -76,7 +83,7 @@ var csound = (function() {
      * Prints current status to the console.
      * @param {string} opt_message The status message.
      */
-    function updateStatus(opt_message, keep) {
+    function UpdateStatus(opt_message, keep) {
         if (opt_message) {
             statusText = 'Csound: ' + opt_message + '\n';
         }
@@ -139,19 +146,6 @@ var csound = (function() {
         csound.Csound.evaluateCode(s);
     }
 
-    function loadCSD(url, callback) {
-        var xmlHttpRequest = new XMLHttpRequest();
-        xmlHttpRequest.onload = function() {
-            var data = new Uint8Array(xmlHttpRequest.response);
-            var stream = FS.open(url, 'w+');
-            FS.write(stream, data, 0, data.length, 0);
-            FS.close(stream);
-            callback();
-        };
-        xmlHttpRequest.open("get", url, true);
-        xmlHttpRequest.responseType = "arraybuffer";
-        xmlHttpRequest.send(null);
-    }
 
     /**
      * Starts real-time audio playback with a CSD. The variable can contain 
@@ -160,7 +154,7 @@ var csound = (function() {
      * @param {string} s A string containing the pathname to the CSD.
      */
     function PlayCsd(s) {
-        loadCSD(s, function() {
+        CopyUrlToLocal(s, s, function() {
             csound.Csound.compileCSD(s);
             csound.Csound.start();
             started = true;
@@ -187,7 +181,7 @@ var csound = (function() {
      * @param {function} callback completion callback
      */
     function RenderCsd(s, callback = null) {
-        loadCSD(s, function() {
+        CopyUrlToLocal(s, s, function() {
             csound.Csound.render(s);
             callback();
         });
@@ -345,7 +339,8 @@ var csound = (function() {
      *
      */
     function RequestChannel(name) {
-        return csound.Csound.getControlChannel(name);
+      csound.Csound.requestControlChannel(name);
+      return csound.Csound.getControlChannel(name);  
     }
 
     /**
@@ -371,60 +366,17 @@ var csound = (function() {
         var xmlHttpRequest = new XMLHttpRequest();
         xmlHttpRequest.onload = function() {
             var data = new Uint8Array(xmlHttpRequest.response);
-            var stream = FS.open(name, 'w+');
-            FS.write(stream, data, 0, data.length, 0);
-            FS.close(stream);
-            if (callback != null) callback();
+            csound.Csound.writeToFS(name, data);
+            callback();
         };
         xmlHttpRequest.open("get", url, true);
         xmlHttpRequest.responseType = "arraybuffer";
         xmlHttpRequest.send(null);
+
     }
 
-    /**
-     * Requests the data from a local file;
-     * module sends "Complete" message when done.
-     *
-     * @param {string} url  The file name
-     */
-    function RequestFileFromLocal(name) {
-        fileData = FS.readFile(name, {
-            encoding: 'binary'
-        });
-    }
-
-    /**
-     * Returns the most recently requested file data.
-     *
-     */
-    function GetFileData() {
-        return fileData;
-    }
-
-    /**
-     * Requests the data from a table;
-     * module sends "Complete" message when done.
-     *
-     * @param {number} num  The table number
-     */
-    function RequestTable(num) {
-        tableData = csound.Csound.getTable(num);
-    }
-
-    /**
-     * Returns the most recently requested table data.
-     *
-     */
-    function GetTableData() {
-        return tableData;
-    }
-
-    function message(text) {
-        csound.updateStatus(text);
-    }
-
-    function start() {
-        csound.Csound.start();
+    function Message(text) {
+        csound.UpdateStatus(text);
     }
 
     /**
@@ -433,12 +385,16 @@ var csound = (function() {
      */
     function StartInputAudio() {
         csound.Csound.enableInput(function(status) {
-            if (status) csound.updateStatus("enabled audio input\n");
-            else csound.updateStatus("failed to enable audio input\n");
+            if (status) csound.UpdateStatus("enabled audio input\n");
+            else csound.UpdateStatus("failed to enable audio input\n");
         });
     }
-    
-    function reset() {
+
+     /**
+     * Reset the Csound engine
+     *
+     */
+    function Reset() {
         csound.Csound.reset();
     }
 
@@ -456,11 +412,9 @@ var csound = (function() {
         CopyUrlToLocal: CopyUrlToLocal,
         createModule: createModule,
         Event: Event,
-        GetFileData: GetFileData,
         GetScoreTime: GetScoreTime,
         getScoreTime: GetScoreTime,
-        GetTableData: GetTableData,
-        message: message,
+        Message: Message,
         MIDIin: MIDIin,
         NoteOff: NoteOff,
         NoteOn: NoteOn,
@@ -472,32 +426,27 @@ var csound = (function() {
         PolyAftertouch: PolyAftertouch,
         ProgramChange: ProgramChange,
         ReadScore: ReadScore,
-        readScore: ReadScore,
         RenderCsd: RenderCsd,
         RequestChannel: RequestChannel,
-        RequestFileFromLocal: RequestFileFromLocal,
-        RequestTable: RequestTable,
-        reset: reset,
+        Reset: Reset,
         SetChannel: SetChannel,
-        setControlChannel: SetChannel,
+        SetControlChannel: SetChannel,
         SetStringChannel: SetStringChannel,
-        setStringChannel: SetStringChannel,
         SetTable: SetTable,
         StartInputAudio: StartInputAudio,
-        start: start,
         Start: Play,
-        stop: Stop,
-        updateStatus: updateStatus
+        Stop: Stop,
+        UpdateStatus: UpdateStatus
     };
-}());
+};
 
 document.addEventListener('DOMContentLoaded', function() {
-    csound.updateStatus('page loaded');
+    csound.UpdateStatus('page loaded');
     if (csound.module == false) {
-        csound.updateStatus('Loading WASM Csound module.\nThis might take a little while.');
+        csound.UpdateStatus('Loading WASM Csound module.\nThis might take a little while.');
         csound.createModule();
     } else {
-        csound.updateStatus('Not ready.');
+        csound.UpdateStatus('Not ready.');
     }
     window.addEventListener("unload", function(e) {
         if (csound != null && csound.Csound != null)
@@ -505,3 +454,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }, false);
 
 });
+
+/**
+ *  The global singleton csound frontend object
+ * 
+ */
+var csound = new Csound();
