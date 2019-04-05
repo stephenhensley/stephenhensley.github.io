@@ -34,7 +34,6 @@
     function onPageLoad() {
         //csound = new CsoundObj();
         displayContents("Updated at 6:59PM 7/22/2018");
-        checkFileAPI();
     }
 
     function checkFileAPI() {
@@ -50,7 +49,8 @@
     function readInstr(filePath) {
         var fileTypes = ["instr"];
         var output = ""; //placeholder for text output
-        if(filePath.files && filePath.files[0]) {           
+        var fapi_valid = checkFileAPI()
+        if(filePath.files && filePath.files[0] && fapi_valid) {           
             reader.onload = function (e) {
                 output = e.target.result;
                 // FIX: This only checks the first extension...
@@ -199,11 +199,9 @@
         }
         return srcs;
     }
-    window.onload = onPageLoad();
 </script>
 </head>
-<!--body onload="onPageLoad();">-->
-<body>
+<body onload="onPageLoad();">
     <div id="container"> 
         <h2>Instr File Selector</h2>   
         <input type="file" onchange='readInstr(this)'/>
