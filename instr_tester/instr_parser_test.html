@@ -126,7 +126,14 @@
         SetParam("speed", '', 1., 0.);
         csound.start();
     }
-    CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
+    var promise = CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
+    if (promise !== undefined) {
+        promise.then(_ => {
+            // Autoplay started!
+        }).catch(error => {
+            // Autoplay prevented.
+        });
+    }
     // attach callbacks to sliders
     function attachListeners() {
        
