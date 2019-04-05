@@ -192,6 +192,7 @@
         for (var i = 0; i < filelist.length; i++) {
             console.log("Loading " + filelist[i].name);
             srcs[filelist[i].name] = URL.createObjectURL(filelist[i]);
+            CsoundObj.writeToFS("./local/"+filelist[i].name, srcs[filelist[i].name]) {
             console.log("Loaded Source: " + srcs[filelist[i].name]);
         }
         return srcs;
