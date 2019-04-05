@@ -192,10 +192,17 @@
         for (var i = 0; i < filelist.length; i++) {
             console.log("Loading " + filelist[i].name);
             srcs[filelist[i].name] = URL.createObjectURL(filelist[i]);
-            csound.writeToFS(filelist[i].name, filelist[i]);
-            console.log("Loaded Source: " + srcs[filelist[i].name]);
+            reader.readAsArrayBuffer(filelist[i]);
         }
         return srcs;
+    }
+
+    reader.onload = function() {
+        var filecontents = new(Blob([reader.result], {type:audio/wav}); 
+        csound.writeToFS(filelist[i].name, filecontents);
+        console.log("Loaded Source: " + srcs[filelist[i].name]);
+        console.log("Contents:");
+        console.log(filecontents);
     }
     CsoundObj.importScripts("./js/").then(() => {moduleDidLoad();});
     

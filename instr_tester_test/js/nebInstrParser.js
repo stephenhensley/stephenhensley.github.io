@@ -91,7 +91,19 @@ class nebInstrParser {
             srStr = "sr = " + sr +"\n";
         } 
         this.orcPreamble = this.orcPreamble + ksmpsStr + srStr + "; End Generated Orchestra Preamble\n";
-        this.orchestra = this.orcPreamble + this.orcSetup + this.orcBody;
+        // Add Files
+        this.orcFiles = ""
+    	for (var i = 0; i < this.audioFileList.length; i++) {
+    		var f = this.audioFileList[i].name;
+    		this.orcFiles += "f " + (400 + i) + " 0 0 1 \"" + f + "\" 0 0 1\n";
+    		this.orcFiles += "gSname[" + i +"] = \"" + f + "\"\n";
+            this.orcFiles += "gilen[" + i +"] filelen \"" + f + "\"\n";
+            this.orcFiles += "gichn[" + i +"] filenchnls \"" + f + "\"\n";
+            this.orcFiles += "gisr[" + i +"] filesr \"" + f + "\"\n";
+            this.orcFiles += "gipeak[" + i +"] filepeak \"" + f + "\"\n";
+        	this.orcFiles += "ginumfiles init " + this.audioFileList.length + "\n";
+    	}
+        this.orchestra = this.orcPreamble + this.orcSetup + this.orcBody + this.orcFiles;
     }
 
     fillAudioList(filelist) {
@@ -102,16 +114,6 @@ class nebInstrParser {
     generateSco() {
     	var score = "";
     	score += this.scoreInfinite;
-    	for (var i = 0; i < this.audioFileList.length; i++) {
-    		var f = this.audioFileList[i].name;
-    		score += "f " + (400 + i) + " 0 0 1 \"" + f + "\" 0 0 1\n";
-    		score += "gSname[" + i +"] = \"" + f + "\"\n";
-            score += "gilen[" + i +"] filelen \"" + f + "\"\n";
-            score += "gichn[" + i +"] filenchnls \"" + f + "\"\n";
-            score += "gisr[" + i +"] filesr \"" + f + "\"\n";
-            score += "gipeak[" + i +"] filepeak \"" + f + "\"\n";
-        	score += "ginumfiles init " + this.audioFileList.length + "\n";
-    	}
     	this.score = score;
     }
 
