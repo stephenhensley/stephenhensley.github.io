@@ -198,7 +198,7 @@
     }
 
     reader.onload = function() {
-        var filecontents = new(Blob([reader.result], {type:audio/wav}); 
+        var filecontents = new(Blob([reader.result], {type:audio/wav})); 
         csound.writeToFS(filelist[i].name, filecontents);
         console.log("Loaded Source: " + srcs[filelist[i].name]);
         console.log("Contents:");
