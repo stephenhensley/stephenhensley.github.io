@@ -124,6 +124,9 @@
         SetParam("window", '', 1., 0.);
         SetParam("pitch", '', 1., 0.);
         SetParam("speed", '', 1., 0.);
+        csound.audioContext.resume().then(() => {
+                    console.log('Playback resumed successfully')
+                })
         csound.start();
     }
     // attach callbacks to sliders

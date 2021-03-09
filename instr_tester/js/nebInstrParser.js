@@ -115,6 +115,7 @@ class nebInstrParser {
     	}
     	*/
     	// TEMP HARDCODED FOR TEST.
+        /*
     	for (var i = 0; i < 2; i++) {
     		var f;
     		switch(i) {
@@ -136,6 +137,7 @@ class nebInstrParser {
             score += "gipeak[" + i +"] filepeak \"" + f + "\"\n";
         	score += "ginumfiles init " + 2 + "\n";
     	}
+        */
     	
 
     	this.score = score;
